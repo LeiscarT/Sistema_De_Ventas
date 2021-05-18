@@ -16,6 +16,7 @@ namespace WsVentas
 {
     public class Startup
     {
+        readonly string cors = "cors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +33,15 @@ namespace WsVentas
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WsVentas", Version = "v1" });
             });
+
+            services.AddCors(options =>
+            {
+            options.AddPolicy(name: cors,
+                                builder => { builder.WithOrigins("*"); });
+                
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +53,7 @@ namespace WsVentas
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WsVentas v1"));
             }
-
+            app.UseCors(cors);
             app.UseHttpsRedirection();
 
             app.UseRouting();
