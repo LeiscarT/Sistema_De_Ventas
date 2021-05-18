@@ -1,2 +1,5 @@
 # Ignora la solucion del proyecto (sln)
 *.sln
+
+#ignora configuracion de visual
+*.vs
